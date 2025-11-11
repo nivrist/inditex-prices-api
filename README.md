@@ -9,7 +9,8 @@ Sistema de consulta de precios aplicables a productos de diferentes marcas. Cuan
 **Características:**
 - Arquitectura Hexagonal (Ports & Adapters)
 - Domain-Driven Design (DDD)
-- 72 tests (unitarios, integración, E2E, arquitectura)
+- 76 tests (unitarios, integración, E2E, arquitectura)
+- Cobertura de código: 93.41% (JaCoCo)
 - Validación de arquitectura con ArchUnit
 - Calidad de código con CheckStyle
 - Documentación OpenAPI/Swagger
@@ -25,13 +26,28 @@ Sistema de consulta de precios aplicables a productos de diferentes marcas. Cuan
 | Lombok | 1.18.30 | Reducción de boilerplate |
 | MapStruct | 1.5.5 | Mapeo DTO/Entity |
 | SpringDoc OpenAPI | 2.3.0 | Documentación API |
-| ArchUnit | 1.2.1 | Tests de arquitectura |
+| JaCoCo | 0.8.11 | Cobertura de código |
+| CheckStyle | 3.3.1 | Calidad de código |
+| ArchUnit | 1.3.0 | Tests de arquitectura |
 | REST Assured | 5.4.0 | Tests E2E |
 
 ## Requisitos
 
-- Java 17+
+- Java 17+ (LTS)
 - Maven 3.8+
+
+**Nota sobre Java:** El proyecto está configurado para Java 17. Si tienes múltiples versiones de Java instaladas, asegúrate de que Maven use Java 17 para evitar warnings de JaCoCo:
+
+```bash
+# Crear archivo ~/.mavenrc para que Maven use Java 17
+echo 'export JAVA_HOME=/path/to/java-17' > ~/.mavenrc
+
+# macOS con Homebrew
+echo 'export JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home' > ~/.mavenrc
+
+# Verificar versión de Java que usa Maven
+mvn -version
+```
 
 ## Instalación y Ejecución
 
@@ -86,7 +102,7 @@ java -jar target/prices-api-1.0.0.jar --spring.profiles.active=dev
 ## Tests
 
 ```bash
-# Todos los tests (72 tests)
+# Todos los tests (76 tests)
 mvn test
 
 # Solo tests unitarios
@@ -106,18 +122,69 @@ mvn test -Dtest="HexagonalArchitectureTest"
 - 17 tests de dominio
 - 8 tests de aplicación
 - 8 tests de integración
-- 17 tests E2E
+- 21 tests E2E (incluye validación de parámetros negativos/cero)
 - 22 tests de arquitectura
-- **Total: 72 tests**
+- **Total: 76 tests**
 
 ## Calidad de Código
+
+### CheckStyle
 
 ```bash
 # Validar con CheckStyle
 mvn checkstyle:check
+```
 
-# Validar todo (tests + checkstyle)
+Configuración en `checkstyle.xml`:
+- Max method length: 50 líneas
+- Max parameters: 5 por método
+- Max line length: 120 caracteres
+- Validaciones de naming y JavaDoc
+
+### Cobertura de Código (JaCoCo)
+
+**Cobertura actual: 93.41%**
+
+```bash
+# Generar reporte de cobertura (automático con mvn test)
+mvn clean test
+
+# Ver reporte HTML
+open target/site/jacoco/index.html
+
+# Verificar umbrales de cobertura (falla si < 85%)
 mvn verify
+```
+
+**Archivos generados:**
+- `target/site/jacoco/index.html` - Reporte visual interactivo
+- `target/site/jacoco/jacoco.xml` - Para CI/CD (SonarQube, Codecov)
+- `target/site/jacoco/jacoco.csv` - Datos tabulares
+
+**Umbrales configurados:**
+- Cobertura de líneas: 85% mínimo
+- Cobertura de branches: 85% mínimo
+
+**Exclusiones:**
+- Clase principal (`PricesApplication`)
+- Configuraciones Spring (`config/**`)
+- Entidades JPA (solo getters/setters)
+- DTOs (sin lógica de negocio)
+- Mappers generados por MapStruct
+- Modelos de dominio inmutables (Lombok `@Value`)
+- Excepciones de dominio
+
+**Cobertura por componente:**
+- `PriceController`: 100%
+- `PriceService`: 100%
+- `PriceJpaAdapter`: 100%
+- `GlobalExceptionHandler`: 82.5%
+
+### Validación Completa
+
+```bash
+# Ejecutar todo: tests + checkstyle + cobertura
+mvn clean verify
 ```
 
 ## API REST
@@ -251,6 +318,24 @@ mvn clean
 # Ver dependencias
 mvn dependency:tree
 ```
+
+## Métricas de Calidad
+
+| Métrica | Valor | Estado |
+|---------|-------|--------|
+| **Tests** | 76 tests | ✅ 100% passing |
+| **Cobertura de Código** | 93.41% | ✅ Excelente |
+| **CheckStyle Violations** | 0 | ✅ Sin violaciones |
+| **Tests de Arquitectura** | 22 reglas | ✅ Todas cumplen |
+| **Componentes 100% cubiertos** | 3 de 4 | ✅ PriceController, PriceService, PriceJpaAdapter |
+
+**Distribución de Tests:**
+- 🧪 Unitarios: 25 tests
+- 🔗 Integración: 8 tests
+- 🌐 E2E (REST Assured): 21 tests
+- 🏛️ Arquitectura (ArchUnit): 22 tests
+
+**Tiempo de ejecución:** ~13 segundos
 
 ## Autor
 
