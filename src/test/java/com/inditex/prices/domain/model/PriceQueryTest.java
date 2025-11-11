@@ -1,6 +1,5 @@
 package com.inditex.prices.domain.model;
 
-import com.inditex.prices.domain.exception.InvalidQueryException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,13 +18,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class PriceQueryTest {
 
     /**
-     * Verifica que se lanza InvalidQueryException cuando la fecha de aplicación es null.
+     * Verifica que se lanza IllegalArgumentException cuando la fecha de aplicación es null.
      * <p>
      * Regla de negocio: La fecha de aplicación es obligatoria para cualquier consulta de precio.
      * </p>
      */
     @Test
-    @DisplayName("Debe lanzar InvalidQueryException cuando la fecha de aplicación es null")
+    @DisplayName("Debe lanzar IllegalArgumentException cuando la fecha de aplicación es null")
     void shouldThrowExceptionWhenApplicationDateNull() {
         // Given: Una consulta con fecha null pero otros campos válidos
         PriceQuery query = PriceQuery.builder()
@@ -35,10 +34,10 @@ class PriceQueryTest {
                 .build();
 
         // When & Then: La validación debe lanzar excepción
-        InvalidQueryException exception = assertThrows(
-                InvalidQueryException.class,
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
                 query::validate,
-                "Debería lanzar InvalidQueryException cuando la fecha es null"
+                "Debería lanzar IllegalArgumentException cuando la fecha es null"
         );
 
         assertTrue(exception.getMessage().contains("fecha de aplicación"),
@@ -46,13 +45,13 @@ class PriceQueryTest {
     }
 
     /**
-     * Verifica que se lanza InvalidQueryException cuando el productId es null.
+     * Verifica que se lanza IllegalArgumentException cuando el productId es null.
      * <p>
      * Regla de negocio: El identificador de producto es obligatorio para cualquier consulta.
      * </p>
      */
     @Test
-    @DisplayName("Debe lanzar InvalidQueryException cuando el productId es null")
+    @DisplayName("Debe lanzar IllegalArgumentException cuando el productId es null")
     void shouldThrowExceptionWhenProductIdNull() {
         // Given: Una consulta con productId null pero otros campos válidos
         PriceQuery query = PriceQuery.builder()
@@ -62,10 +61,10 @@ class PriceQueryTest {
                 .build();
 
         // When & Then: La validación debe lanzar excepción
-        InvalidQueryException exception = assertThrows(
-                InvalidQueryException.class,
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
                 query::validate,
-                "Debería lanzar InvalidQueryException cuando productId es null"
+                "Debería lanzar IllegalArgumentException cuando productId es null"
         );
 
         assertTrue(exception.getMessage().contains("producto"),
@@ -73,13 +72,13 @@ class PriceQueryTest {
     }
 
     /**
-     * Verifica que se lanza InvalidQueryException cuando el productId es negativo.
+     * Verifica que se lanza IllegalArgumentException cuando el productId es negativo.
      * <p>
      * Regla de negocio: Los identificadores de producto deben ser valores positivos (mayor que 0).
      * </p>
      */
     @Test
-    @DisplayName("Debe lanzar InvalidQueryException cuando el productId es negativo")
+    @DisplayName("Debe lanzar IllegalArgumentException cuando el productId es negativo")
     void shouldThrowExceptionWhenProductIdNegative() {
         // Given: Una consulta con productId negativo
         PriceQuery query = PriceQuery.builder()
@@ -89,10 +88,10 @@ class PriceQueryTest {
                 .build();
 
         // When & Then: La validación debe lanzar excepción
-        InvalidQueryException exception = assertThrows(
-                InvalidQueryException.class,
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
                 query::validate,
-                "Debería lanzar InvalidQueryException cuando productId es negativo"
+                "Debería lanzar IllegalArgumentException cuando productId es negativo"
         );
 
         assertTrue(exception.getMessage().contains("positivo"),
@@ -102,13 +101,13 @@ class PriceQueryTest {
     }
 
     /**
-     * Verifica que se lanza InvalidQueryException cuando el productId es cero.
+     * Verifica que se lanza IllegalArgumentException cuando el productId es cero.
      * <p>
      * Regla de negocio: Los identificadores de producto deben ser valores positivos (mayor que 0).
      * </p>
      */
     @Test
-    @DisplayName("Debe lanzar InvalidQueryException cuando el productId es cero")
+    @DisplayName("Debe lanzar IllegalArgumentException cuando el productId es cero")
     void shouldThrowExceptionWhenProductIdZero() {
         // Given: Una consulta con productId cero
         PriceQuery query = PriceQuery.builder()
@@ -118,10 +117,10 @@ class PriceQueryTest {
                 .build();
 
         // When & Then: La validación debe lanzar excepción
-        InvalidQueryException exception = assertThrows(
-                InvalidQueryException.class,
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
                 query::validate,
-                "Debería lanzar InvalidQueryException cuando productId es cero"
+                "Debería lanzar IllegalArgumentException cuando productId es cero"
         );
 
         assertTrue(exception.getMessage().contains("positivo"),
@@ -129,13 +128,13 @@ class PriceQueryTest {
     }
 
     /**
-     * Verifica que se lanza InvalidQueryException cuando el brandId es null.
+     * Verifica que se lanza IllegalArgumentException cuando el brandId es null.
      * <p>
      * Regla de negocio: El identificador de marca es obligatorio para cualquier consulta.
      * </p>
      */
     @Test
-    @DisplayName("Debe lanzar InvalidQueryException cuando el brandId es null")
+    @DisplayName("Debe lanzar IllegalArgumentException cuando el brandId es null")
     void shouldThrowExceptionWhenBrandIdNull() {
         // Given: Una consulta con brandId null pero otros campos válidos
         PriceQuery query = PriceQuery.builder()
@@ -145,10 +144,10 @@ class PriceQueryTest {
                 .build();
 
         // When & Then: La validación debe lanzar excepción
-        InvalidQueryException exception = assertThrows(
-                InvalidQueryException.class,
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
                 query::validate,
-                "Debería lanzar InvalidQueryException cuando brandId es null"
+                "Debería lanzar IllegalArgumentException cuando brandId es null"
         );
 
         assertTrue(exception.getMessage().contains("marca"),
@@ -156,13 +155,13 @@ class PriceQueryTest {
     }
 
     /**
-     * Verifica que se lanza InvalidQueryException cuando el brandId es negativo.
+     * Verifica que se lanza IllegalArgumentException cuando el brandId es negativo.
      * <p>
      * Regla de negocio: Los identificadores de marca deben ser valores positivos (mayor que 0).
      * </p>
      */
     @Test
-    @DisplayName("Debe lanzar InvalidQueryException cuando el brandId es negativo")
+    @DisplayName("Debe lanzar IllegalArgumentException cuando el brandId es negativo")
     void shouldThrowExceptionWhenBrandIdNegative() {
         // Given: Una consulta con brandId negativo
         PriceQuery query = PriceQuery.builder()
@@ -172,10 +171,10 @@ class PriceQueryTest {
                 .build();
 
         // When & Then: La validación debe lanzar excepción
-        InvalidQueryException exception = assertThrows(
-                InvalidQueryException.class,
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
                 query::validate,
-                "Debería lanzar InvalidQueryException cuando brandId es negativo"
+                "Debería lanzar IllegalArgumentException cuando brandId es negativo"
         );
 
         assertTrue(exception.getMessage().contains("positivo"),
@@ -185,13 +184,13 @@ class PriceQueryTest {
     }
 
     /**
-     * Verifica que se lanza InvalidQueryException cuando el brandId es cero.
+     * Verifica que se lanza IllegalArgumentException cuando el brandId es cero.
      * <p>
      * Regla de negocio: Los identificadores de marca deben ser valores positivos (mayor que 0).
      * </p>
      */
     @Test
-    @DisplayName("Debe lanzar InvalidQueryException cuando el brandId es cero")
+    @DisplayName("Debe lanzar IllegalArgumentException cuando el brandId es cero")
     void shouldThrowExceptionWhenBrandIdZero() {
         // Given: Una consulta con brandId cero
         PriceQuery query = PriceQuery.builder()
@@ -201,10 +200,10 @@ class PriceQueryTest {
                 .build();
 
         // When & Then: La validación debe lanzar excepción
-        InvalidQueryException exception = assertThrows(
-                InvalidQueryException.class,
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
                 query::validate,
-                "Debería lanzar InvalidQueryException cuando brandId es cero"
+                "Debería lanzar IllegalArgumentException cuando brandId es cero"
         );
 
         assertTrue(exception.getMessage().contains("positivo"),
@@ -252,8 +251,8 @@ class PriceQueryTest {
                 .build();
 
         // When & Then: La excepción debe ser por la fecha (se valida primero)
-        InvalidQueryException exception = assertThrows(
-                InvalidQueryException.class,
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
                 query::validate
         );
 

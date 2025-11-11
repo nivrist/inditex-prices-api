@@ -406,4 +406,96 @@ class PriceSystemTest {
                 .body("priceList", equalTo(1))
                 .body("price", equalTo(35.5f));
     }
+
+    // ========================================================================
+    // Tests de validación de valores negativos y cero
+    // ========================================================================
+
+    /**
+     * Verifica que retorna 400 cuando productId es negativo.
+     */
+    @Test
+    @DisplayName("Error 400 - Debe retornar Bad Request cuando productId es negativo")
+    void whenProductIdIsNegative_shouldReturn400() {
+        given()
+                .queryParam("applicationDate", "2020-06-14T10:00:00")
+                .queryParam("productId", -1)
+                .queryParam("brandId", 1)
+                .when()
+                .get("/prices")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .contentType(ContentType.JSON)
+                .body("status", equalTo(400))
+                .body("error", equalTo("Bad Request"))
+                .body("message", notNullValue())
+                .body("timestamp", notNullValue())
+                .body("path", equalTo("/api/prices"));
+    }
+
+    /**
+     * Verifica que retorna 400 cuando productId es cero.
+     */
+    @Test
+    @DisplayName("Error 400 - Debe retornar Bad Request cuando productId es cero")
+    void whenProductIdIsZero_shouldReturn400() {
+        given()
+                .queryParam("applicationDate", "2020-06-14T10:00:00")
+                .queryParam("productId", 0)
+                .queryParam("brandId", 1)
+                .when()
+                .get("/prices")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .contentType(ContentType.JSON)
+                .body("status", equalTo(400))
+                .body("error", equalTo("Bad Request"))
+                .body("message", notNullValue())
+                .body("timestamp", notNullValue())
+                .body("path", equalTo("/api/prices"));
+    }
+
+    /**
+     * Verifica que retorna 400 cuando brandId es negativo.
+     */
+    @Test
+    @DisplayName("Error 400 - Debe retornar Bad Request cuando brandId es negativo")
+    void whenBrandIdIsNegative_shouldReturn400() {
+        given()
+                .queryParam("applicationDate", "2020-06-14T10:00:00")
+                .queryParam("productId", 35455)
+                .queryParam("brandId", -1)
+                .when()
+                .get("/prices")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .contentType(ContentType.JSON)
+                .body("status", equalTo(400))
+                .body("error", equalTo("Bad Request"))
+                .body("message", notNullValue())
+                .body("timestamp", notNullValue())
+                .body("path", equalTo("/api/prices"));
+    }
+
+    /**
+     * Verifica que retorna 400 cuando brandId es cero.
+     */
+    @Test
+    @DisplayName("Error 400 - Debe retornar Bad Request cuando brandId es cero")
+    void whenBrandIdIsZero_shouldReturn400() {
+        given()
+                .queryParam("applicationDate", "2020-06-14T10:00:00")
+                .queryParam("productId", 35455)
+                .queryParam("brandId", 0)
+                .when()
+                .get("/prices")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .contentType(ContentType.JSON)
+                .body("status", equalTo(400))
+                .body("error", equalTo("Bad Request"))
+                .body("message", notNullValue())
+                .body("timestamp", notNullValue())
+                .body("path", equalTo("/api/prices"));
+    }
 }
