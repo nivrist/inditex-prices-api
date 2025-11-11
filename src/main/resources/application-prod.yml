@@ -1,0 +1,40 @@
+# Perfil PROD - Producción
+# Activar con: java -jar prices-api.jar --spring.profiles.active=prod
+# Variables de entorno requeridas: DB_URL, DB_USER, DB_PASSWORD
+
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/pricesdb}
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+
+  h2:
+    console:
+      enabled: false
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate  # No crear/modificar schema automáticamente
+    show-sql: false
+
+  sql:
+    init:
+      mode: never  # Scripts ejecutados manualmente en producción
+
+logging:
+  level:
+    root: WARN
+    com.inditex.prices: INFO
+    org.hibernate: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: /var/log/prices-api/application.log
+    max-size: 10MB
+    max-history: 30

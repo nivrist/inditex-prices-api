@@ -1,0 +1,17 @@
+
+  ___           _ _ _
+ |_ _|_ __   __| (_) |_ _____  __
+  | || '_ \ / _` | | __/ _ \ \/ /
+  | || | | | (_| | | ||  __/>  <
+ |___|_| |_|\__,_|_|\__\___/_/\_\
+
+ ╔═══════════════════════════════════════════╗
+ ║         PRICES API - MICROSERVICE         ║
+ ║      Hexagonal Architecture Pattern       ║
+ ╚═══════════════════════════════════════════╝
+
+ :: Spring Boot ::        (v${spring-boot.version})
+ :: Application ::        ${spring.application.name}
+ :: Profile     ::        ${spring.profiles.active:default}
+ :: Port        ::        ${server.port:8080}
+
