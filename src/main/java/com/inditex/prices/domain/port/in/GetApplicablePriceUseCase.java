@@ -22,7 +22,6 @@ public interface GetApplicablePriceUseCase {
      * @return precio aplicable con mayor prioridad
      * @throws InvalidQueryException si los parámetros no son válidos
      * @throws PriceNotFoundException si no existe precio aplicable
-     * @throws NullPointerException si query es null
      */
     Price getApplicablePrice(PriceQuery query);
 }
