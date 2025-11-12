@@ -9,7 +9,7 @@ target/
 *.iws
 *.iml
 *.ipr
-out/
+/out/
 
 # IDE - Eclipse
 .classpath
@@ -47,6 +47,3 @@ logs/
 # H2 Database
 *.h2.db
 *.trace.db
-
-# Application
-application-local.yml
